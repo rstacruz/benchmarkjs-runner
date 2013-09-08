@@ -3,7 +3,7 @@
 Easy way to create performance tests for browser JS performance using 
 [benchmark.js].
 
-![Screenshot](http://rstacruz.github.io/benchmark-runner/support/screenshot.png)
+![Screenshot](http://rstacruz.github.io/benchmarkjs-runner/support/screenshot.png)
 
 ## Usage
 
@@ -15,7 +15,7 @@ examples.
 <!DOCTYPE html>
 <meta charset='utf-8' />
 <title>Benchmarks</title>
-<script src='http://rstacruz.github.io/benchmark-runner/benchmark-runner.js'></script>
+<script src='http://rstacruz.github.io/benchmarkjs-runner/runner.js'></script>
 <script>
 
   suite("String matching", function() {
