@@ -55,6 +55,8 @@ the suite are invoked.
 
 ## Acknowledgements
 
+Disclaimer: hastily cobbled together out of a need. Expect support to be sparse.
+
 © 2013, Rico Sta. Cruz. Released under the [MIT License].
 
 [MIT License]: http://www.opensource.org/licenses/mit-license.php
