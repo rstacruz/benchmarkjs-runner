@@ -17,8 +17,10 @@
    * Defines a new suite.
    */
 
-  window.suite = function(name, fn) {
-    var mySuite = new Benchmark.Suite(name, fn);
+  window.suite = function(name, options, fn) {
+    if (!fn) {fn = options; options = undefined; }
+
+    var mySuite = new Benchmark.Suite(name, options);
     mySuite.afterEach = [];
 
     Data.suites.push(mySuite);
@@ -97,11 +99,10 @@
         ".b-header button { padding: 2px 10px; border: solid 1px #eee; border-radius: 2px; }" +
         ".b-header button:hover { background: #1bd; border-color: #1bd; color: white; }" +
         ".b-header button.disabled { background: white; border-color: #e0e0e0; color: #bbb; cursor: not-allowed; pointer-events: none; -webkit-pointer-events: none; opacity: 0.2; }" +
-        ".b-bench-status { margin-right: 15px; color: #1bd; font-size: 0.7em; display: none; }" +
+        ".b-bench-status { margin-right: 15px; color: #1bd; font-size: 0.7em; }" +
         ".b-bench h3 { display: inline-block; margin-right: 15px; font-size: 0.9em; }" +
         ".b-progress { display: inline-block; width: 50px; height: 4px; border: solid 1px #ddd; position: relative; border-radius: 2px; margin-right: 10px; padding: 1px; }" +
         ".b-progress-bar { width: 0; background: #ccc; height: 100%; }";
-
     },
 
     suite: function(data) {
@@ -119,8 +120,8 @@
       return "" +
         "<div class='b-bench'>" +
           "<div class='b-progress'><div class='b-progress-bar'></div></div>" +
-          "<h3>" + data.name + "</h3>" +
           "<span class='b-bench-status'></span>" +
+          "<h3>" + data.name + "</h3>" +
         "</div>";
     }
   };

@@ -4,7 +4,7 @@
 <script src='benchmark-runner.js'></script>
 <script src='http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js'></script>
 <script>
-suite("Cloning", function() {
+suite("Cloning", { maxTime: 1 }, function() {
   var html = ("<div class='foo'><ul><li class='name'>Hello</li><li class='addr'>There</li></ul></div>");
 
   var $src, $srcbody, tpl;
