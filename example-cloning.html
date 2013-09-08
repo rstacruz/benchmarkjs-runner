@@ -2,14 +2,17 @@
 <meta charset='utf-8' />
 <title>Benchmarks</title>
 <script src='benchmark-runner.js'></script>
+<script src='http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js'></script>
 <script>
 suite("Cloning", function() {
   var html = ("<div class='foo'><ul><li class='name'>Hello</li><li class='addr'>There</li></ul></div>");
 
-  var $src, $srcbody;
+  var $src, $srcbody, tpl;
 
   before(function() {
     $src = $(html);
+    $srcbody = $src.clone().appendTo('body').hide();
+    tpl = _.template("<div class='<%= klass %>'><ul><li class='name'><%= name %></li><li class='addr'><%= addr %></li></ul></div>");
   });
 
   afterEach(function() {
@@ -23,5 +26,34 @@ suite("Cloning", function() {
     $el.find('.addr').html('Moon');
     $el.appendTo('body');
   });
+
+  bench("clone in-dom", function() {
+    var $el = $srcbody.clone();
+    $el.attr('class', 'hello');
+    $el.find('.name').html('Michael Jackson');
+    $el.find('.addr').html('Moon');
+    $el.appendTo('body');
+  });
+
+  bench("clone in-dom, edit in-dom", function() {
+    var $el = $srcbody.clone();
+    $el.appendTo('body');
+    $el.attr('class', 'hello');
+    $el.find('.name').html('Michael Jackson');
+    $el.find('.addr').html('Moon');
+  });
+
+  bench("template", function() {
+    var $el = $(tpl({ klass: 'hello', name: 'Michael Jackson', addr: 'Somewhere' }));
+    $el.appendTo('body');
+  });
+
+  bench('clone via html', function() {
+    var $el = $(html);
+    $el.attr('class', 'hello');
+    $el.find('.name').html('Michael Jackson');
+    $el.find('.addr').html('Somewhere');
+    $el.appendTo('body');
+  })
 });
 </script>
