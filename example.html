@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<meta charset='utf-8' />
+<title>Benchmarks</title>
+<script src='benchmark-runner.js'></script>
+<script>
+suite("String matching", function() {
+  bench("String#indexOf", function() {
+    "Hello world".indexOf('o') > -1;
+  });
+
+  bench("String#match", function() {
+    !! "Hello world".match(/o/);
+  });
+
+  bench("RegExp#test", function() {
+    !! /o/.test("Hello world");
+  });
+});
+</script>
