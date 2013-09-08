@@ -1,11 +1,10 @@
 # Benchmark.js runner
 
 Easy way to create performance tests for browser JS performance using 
-[benchmark.js].
+[Benchmark.js]. Think of it like an easy-to-use version of [jsperf.com].
+**[(Demo)](http://rstacruz.github.io/benchmarkjs-runner/example.html)**
 
 ![Screenshot](http://rstacruz.github.io/benchmarkjs-runner/support/screenshot.png)
-
-[See a demo](http://rstacruz.github.io/benchmarkjs-runner/example.html)
 
 ## Usage
 
@@ -43,4 +42,5 @@ examples.
 © 2013, Rico Sta. Cruz. Released under the [MIT License].
 
 [MIT License]: http://www.opensource.org/licenses/mit-license.php
+[jsperf.com]: http://jsperf.com/
 [benchmark.js]: http://benchmarkjs.com/
