@@ -90,7 +90,7 @@
       return "" +
         "html { background: #fff; color: #111; margin: 40px; padding: 0; }" +
         "body { font-size: 12pt; }" +
-        "input, button, body { font-family: Helvetica Neue, sans-serif; line-height: 1.5; }" +
+        "input, button, body { font-family: Helvetica Neue, sans-serif; line-height: 1.5; color: #333; }" +
         "button { cursor: pointer; }" +
         "button { margin: 0; padding: 0; outline: 0; background: transparent; border: 0; }" +
         "h1, h2, h3 { font-weight: 200; font-size: 1em; margin: 0; padding: 0; }" +
@@ -99,9 +99,9 @@
         ".b-header h2 { font-size: 1.2em; font-weight: 200; display: inline-block; margin-right: 15px; }" +
         ".b-header button { display: inline-block; vertical-align: middle; position: relative; top: -2px; }" +
         ".b-header button { padding: 1px 10px; border: solid 1px #eee; border-radius: 2px; }" +
-        ".b-header button { border: solid 1px #1bd; border-radius: 15px; color: #1bd; }" +
-        ".b-header button:hover { background: #1bd; border-color: #1bd; color: white; }" +
-        ".b-header button:active { background: #222; border-color: #222; color: white; }" +
+        ".b-header button { border: solid 1px #ddd; border-radius: 2px; color: #333; }" +
+        ".b-header button:hover { background: #f2f2f2; border-color: #ddd; border-bottom-color: #ccc; }" +
+        ".b-header button:active { background: #1bd; border-color: #1bd; color: white; }" +
         ".b-header button.disabled { background: white; border-color: #e0e0e0; color: #bbb; cursor: not-allowed; pointer-events: none; -webkit-pointer-events: none; opacity: 0.2; }" +
         ".b-bench-status { margin-right: 15px; color: #1bd; font-size: 0.7em; }" +
         ".b-bench { padding: 3px 0; }" +
