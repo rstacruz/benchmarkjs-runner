@@ -101,8 +101,15 @@
         ".b-header button.disabled { background: white; border-color: #e0e0e0; color: #bbb; cursor: not-allowed; pointer-events: none; -webkit-pointer-events: none; opacity: 0.2; }" +
         ".b-bench-status { margin-right: 15px; color: #1bd; font-size: 0.7em; }" +
         ".b-bench h3 { display: inline-block; margin-right: 15px; font-size: 0.9em; }" +
-        ".b-progress { display: inline-block; width: 50px; height: 4px; border: solid 1px #ddd; position: relative; border-radius: 2px; margin-right: 10px; padding: 1px; }" +
-        ".b-progress-bar { width: 0; background: #ccc; height: 100%; }";
+        ".b-progress { display: inline-block; width: 50px; height: 4px; border: solid 1px #ddd; position: relative; border-radius: 2px; margin-right: 10px; padding: 1px; overflow: hidden; }" +
+        ".b-progress { -webkit-transform: translate3d(0,0,0); }" +
+        ".b-progress-bar { width: 0; background: #ccc; height: 100%; }" +
+        ".b-running .b-progress-bar { border-radius: 5px; width: 10px; background: #ccc; }" +
+        ".b-running .b-progress-bar { -webkit-animation: bidi 500ms ease-in-out infinite alternate-reverse; animation: bidi 500ms ease-in-out infinite alternate-reverse; }" +
+        "@-webkit-keyframes bidi { 0% { -webkit-transform: translate3d(0,0,0); } 100% { -webkit-transform: translate3d(40px,0,0); } }" +
+        "@-moz-keyframes bidi { 0% { -moz-transform: translate(0,0); } 100% { -moz-transform: translate3d(40px,0); } }" +
+        "@keyframes bidi { 0% { transform: translate(0,0); } 100% { transform: translate3d(40px,0); } }" +
+        "";
     },
 
     suite: function(data) {
@@ -187,13 +194,10 @@
       console.log(bench.error);
     }
 
-    else if (bench.running) {
-      str = 'running...';
-    }
-
-    else if (bench.count > 0) {
+    else if (!bench.running && bench.count > 0) {
       str = n(bench.hz) + " per sec";
       tip = "Executed " + n(bench.count) + "x";
+      console.log(bench);
     }
 
     if (!suite.running) {
@@ -203,7 +207,8 @@
     }
 
     $bench
-      .find('.b-bench-status').show().html(str).attr('title', tip).end();
+      .find('.b-bench-status').show().html(str).attr('title', tip).end()
+      .find('.b-progress').toggleClass('b-running', bench.running).end();
   }
 
   /**
