@@ -27,10 +27,32 @@
   };
 
   /**
+   * For things to run before an entire suite
+   */
+
+  window.before = function(fn) {
+    if (!Data.current.suite) throw new Error("No suite");
+    var suite = Data.current.suite;
+
+    suite.on('start', fn);
+  };
+
+  /**
+   * For things to run after an entire suite
+   */
+
+  window.after = function(fn) {
+    if (!Data.current.suite) throw new Error("No suite");
+    var suite = Data.current.suite;
+
+    suite.on('complete', fn);
+  };
+
+  /**
    * Starts a new benchmark inside a suite.
    */
 
-  window.benchmark = function(name, fn, options) {
+  window.benchmark = window.bench = function(name, fn, options) {
     if (!Data.current.suite) throw new Error("No suite");
     var suite = Data.current.suite;
 
@@ -51,14 +73,17 @@
         "button { cursor: pointer; }" +
         "h1, h2, h3 { font-weight: 200; font-size: 1em; margin: 0; padding: 0; }" +
         ".b-suite { margin-bottom: 20px; }" +
+        ".b-header { margin-bottom: 10px; }" +
         ".b-header h2 { font-size: 1.2em; font-weight: 200; display: inline-block; margin-right: 15px; }" +
         ".b-header button { margin: 0; padding: 0; outline: 0; background: transparent; border: 0; }" +
         ".b-header button { padding: 2px 10px; border: solid 1px #eee; border-radius: 2px; }" +
         ".b-header button:hover { background: #1bd; border-color: #1bd; color: white; }" +
         ".b-header button.disabled { background: white; border-color: #e0e0e0; color: #bbb; cursor: not-allowed; pointer-events: none; -webkit-pointer-events: none; opacity: 0.2; }" +
         ".b-bench-status { margin-right: 15px; color: #1bd; font-size: 0.7em; display: none; }" +
-        ".b-benchmarks { margin-left: 20px; }" +
-        ".b-bench h3 { display: inline-block; margin-right: 15px; font-size: 0.9em; }";
+        ".b-bench h3 { display: inline-block; margin-right: 15px; font-size: 0.9em; }" +
+        ".b-progress { display: inline-block; width: 50px; height: 4px; border: solid 1px #ddd; position: relative; border-radius: 2px; margin-right: 10px; padding: 1px; }" +
+        ".b-progress-bar { width: 0; background: #ccc; height: 100%; }";
+
     },
 
     suite: function(data) {
@@ -75,6 +100,7 @@
     bench: function(data) {
       return "" +
         "<div class='b-bench'>" +
+          "<div class='b-progress'><div class='b-progress-bar'></div></div>" +
           "<h3>" + data.name + "</h3>" +
           "<span class='b-bench-status'></span>" +
         "</div>";
@@ -103,6 +129,7 @@
 
       // Bind DOM -> model events
       $suite.find('.b-run').on('click', function() {
+        suite.reset();
         suite.run({ async: true });
       });
 
@@ -114,21 +141,32 @@
 
         .on('complete', function() {
           $suite.find('.b-run').removeClass('disabled');
+          updateSuite(suite, $suite);
         });
 
       $.each(suite, function(i) {
         var bench = this;
-        var $bench = $suite.find('.b-bench').eq(i);
         
         bench.on('start cycle complete', function() {
-          updateBench(this, $bench);
+          updateSuite(suite, $suite);
         });
       });
     });
 
   });
 
-  function updateBench(bench, $bench) {
+  function updateSuite(suite, $suite) {
+    $.each(suite, function(i) {
+      var bench = this;
+      var $bench = $suite.find('.b-bench').eq(i);
+
+      updateBench(suite, this, $bench);
+    });
+  }
+
+  function updateBench(suite, bench, $bench) {
+    var fastest = suite.filter('fastest').pluck('hz')[0];
+
     var str = '';
 
     if (bench.error) {
@@ -145,6 +183,12 @@
         (parseInt(bench.hz, 10) + " ops/sec"),
         (bench.count + "&times;")
       ].join(" &mdash; ");
+
+    }
+
+    if (!suite.running) {
+      var percent = bench.hz / fastest;
+      $bench.find('.b-progress-bar').css({ width: percent*100 + "%" });
     }
 
     $bench
