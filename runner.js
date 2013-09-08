@@ -12887,7 +12887,7 @@ if ( typeof window === "object" && typeof window.document === "object" ) {
           "<span class='b-bench-status'></span>" +
           "<h3>" + data.name + "</h3>" +
           "<button class='b-expand'>&middot;&middot;&middot;</button>" +
-          "<div class='b-code' style='display:none'><pre>" + hilite(data.fn.toString().replace(/ +}$/, '}')) + "</pre></div>" +
+          "<div class='b-code' style='display:none'><pre>" + hilite(fnstrip(data.fn)) + "</pre></div>" +
         "</div>";
     }
   };
@@ -13014,6 +13014,19 @@ if ( typeof window === "object" && typeof window.document === "object" ) {
       .replace(/(\d+)/gm, '<span class="number">$1</span>')
       .replace(/\bnew *(\w+)/gm, '<span class="keyword">new</span> <span class="init">$1</span>')
       .replace(/\b(function|new|throw|return|var|if|else)\b/gm, '<span class="keyword">$1</span>');
+  }
+
+  function fnstrip(fn) {
+    var str = fn.toString()
+      .replace(/^function.*\n/, '')
+      .replace(/\n[\t ]+}$/, '');
+
+    var indent = str.match(/^[ \t]*/)[0];
+
+    return str
+      .replace(new RegExp(/^\s*/), "")
+      .replace(new RegExp("\n"+indent), "\n");
+
   }
 
 })(jQuery);
