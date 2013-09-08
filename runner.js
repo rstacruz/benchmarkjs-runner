@@ -12851,12 +12851,8 @@ if ( typeof window === "object" && typeof window.document === "object" ) {
         ".b-bench h3 { display: inline-block; margin-right: 15px; font-size: 0.9em; }" +
         ".b-progress { display: inline-block; width: 50px; height: 4px; border: solid 1px #ddd; position: relative; border-radius: 2px; margin-right: 10px; padding: 1px; overflow: hidden; }" +
         ".b-progress { -webkit-transform: translate3d(0,0,0); }" +
-        ".b-progress-bar { width: 0; background: #ccc; height: 100%; }" +
-        ".b-running .b-progress-bar { border-radius: 5px; width: 10px; background: #ccc; }" +
-        ".b-running .b-progress-bar { -webkit-animation: bidi 500ms ease-in-out infinite alternate-reverse; animation: bidi 500ms ease-in-out infinite alternate-reverse; }" +
-        "@-webkit-keyframes bidi { 0% { -webkit-transform: translate3d(0,0,0); } 100% { -webkit-transform: translate3d(40px,0,0); } }" +
-        "@-moz-keyframes bidi { 0% { -moz-transform: translate(0,0); } 100% { -moz-transform: translate3d(40px,0); } }" +
-        "@keyframes bidi { 0% { transform: translate(0,0); } 100% { transform: translate3d(40px,0); } }" +
+        ".b-progress-bar { width: 0; background: #ccc; height: 100%; -webkit-transition: width 100ms ease; -moz-transition: width 100ms ease; transition: width 100ms ease; }" +
+        ".b-running .b-progress-bar { width: 5%; background: #eee; }" +
         "";
     },
 
@@ -12922,6 +12918,7 @@ if ( typeof window === "object" && typeof window.document === "object" ) {
           .on('start', function() {
             updateSuite(suite, $suite);
             $bench.find('.b-progress').addClass('b-running');
+            $bench.find('.b-bench-status').html('running...');
           })
           .on('error complete', function() {
             updateSuite(suite, $suite);
