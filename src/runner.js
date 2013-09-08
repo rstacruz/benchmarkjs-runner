@@ -180,7 +180,7 @@
   function updateBench(suite, bench, $bench) {
     var fastest = suite.filter('fastest').pluck('hz')[0];
 
-    var str = '';
+    var str = '', tip = '';
 
     if (bench.error) {
       str = "ERROR";
@@ -192,21 +192,18 @@
     }
 
     else if (bench.count > 0) {
-      str = [
-        (parseInt(bench.hz, 10) + " ops/sec"),
-        (bench.count + "&times;")
-      ].join(" &mdash; ");
-
+      str = n(bench.hz) + " per sec";
+      tip = "Executed " + n(bench.count) + "x";
     }
 
     if (!suite.running) {
       var percent = bench.hz / fastest;
-      $bench.find('.b-progress').attr('title', parseInt(percent*100, 10) + "%");
+      $bench.find('.b-progress').attr('title', n(percent*100) + "%");
       $bench.find('.b-progress-bar').css({ width: percent*100 + "%" });
     }
 
     $bench
-      .find('.b-bench-status').show().html(str).end();
+      .find('.b-bench-status').show().html(str).attr('title', tip).end();
   }
 
   /**
@@ -216,6 +213,15 @@
   function each(list, fn) {
     var len = list.length;
     for (var i=0; i<len; ++i) { fn(list[i], i); }
+  }
+
+  /**
+   * Helper for comma-separating numbebrs
+   */
+
+  function n(x) {
+    // http://stackoverflow.com/questions/2901102/how-to-print-a-number-with-commas-as-thousands-separators-in-javascript
+    return parseInt(x, 10).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
 
 })(jQuery);
