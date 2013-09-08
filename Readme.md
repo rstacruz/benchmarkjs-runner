@@ -3,7 +3,7 @@
 Easy way to create performance tests for browser JS performance using 
 [Benchmark.js]. Think of it like an easy-to-use version of [jsperf.com].
 
-![Screenshot](http://rstacruz.github.io/benchmarkjs-runner/support/screenshot.png)
+![Screenshot](http://rstacruz.github.io/benchmarkjs-runner/support/screenshot.png?v=0852)
 
 ## Usage
 
