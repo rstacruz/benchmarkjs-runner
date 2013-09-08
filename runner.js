@@ -12866,7 +12866,7 @@ if ( typeof window === "object" && typeof window.document === "object" ) {
         "pre .string, pre .number { color: #1bd; }",
         "pre .comment { color: #80808a; }",
         "pre .keyword { color: #5a3; }"
-      ].join();
+      ].join("\n");
     },
 
     suite: function(data) {
