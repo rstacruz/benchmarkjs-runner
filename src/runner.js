@@ -19,11 +19,18 @@
 
   window.suite = function(name, fn) {
     var mySuite = new Benchmark.Suite(name, fn);
+    mySuite.afterEach = [];
 
     Data.suites.push(mySuite);
     Data.current.suite = mySuite;
 
     fn(); /* yield */
+
+    each(mySuite.afterEach, function(fn) {
+      each(mySuite, function(bench) {
+        bench.on('cycle', fn);
+      });
+    });
   };
 
   /**
@@ -49,6 +56,17 @@
   };
 
   /**
+   * Something to do after each.
+   */
+
+  window.afterEach = function(fn) {
+    if (!Data.current.suite) throw new Error("No suite");
+    var suite = Data.current.suite;
+
+    suite.afterEach.push(fn);
+  };
+
+  /**
    * Starts a new benchmark inside a suite.
    */
 
@@ -56,7 +74,7 @@
     if (!Data.current.suite) throw new Error("No suite");
     var suite = Data.current.suite;
 
-    suite.add(name, fn, options);
+    var bench = suite.add(name, fn, options);
   };
 
   // ----------------------------------------------------------------------------
@@ -113,18 +131,15 @@
   $(function() {
     $("<style>").text(Tpl.style()).appendTo("head");
 
-    $.each(Data.suites, function() {
-      var suite = this;
-
+    each(Data.suites, function(suite) {
       // Create DOM for suite
       var $suite = $(Tpl.suite(suite)).appendTo('body');
 
       var timer;
 
       // Create DOM for benchmarks
-      $.each(suite, function() {
-        var benchmark = this;
-        var $bench = $(Tpl.bench(benchmark)).appendTo($suite.find('.b-benchmarks'));
+      each(suite, function(bench) {
+        var $bench = $(Tpl.bench(bench)).appendTo($suite.find('.b-benchmarks'));
       });
 
       // Bind DOM -> model events
@@ -144,9 +159,7 @@
           updateSuite(suite, $suite);
         });
 
-      $.each(suite, function(i) {
-        var bench = this;
-        
+      each(suite, function(bench) {
         bench.on('start cycle complete', function() {
           updateSuite(suite, $suite);
         });
@@ -156,11 +169,10 @@
   });
 
   function updateSuite(suite, $suite) {
-    $.each(suite, function(i) {
-      var bench = this;
+    each(suite, function(bench, i) {
       var $bench = $suite.find('.b-bench').eq(i);
 
-      updateBench(suite, this, $bench);
+      updateBench(suite, bench, $bench);
     });
   }
 
@@ -193,6 +205,15 @@
 
     $bench
       .find('.b-bench-status').show().html(str).end();
+  }
+
+  /**
+   * Helper for each
+   */
+
+  function each(list, fn) {
+    var len = list.length;
+    for (var i=0; i<len; ++i) { fn(list[i], i); }
   }
 
 })(jQuery);

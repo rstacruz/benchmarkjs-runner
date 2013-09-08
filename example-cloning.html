@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<meta charset='utf-8' />
+<title>Benchmarks</title>
+<script src='benchmark-runner.js'></script>
+<script>
+suite("Cloning", function() {
+  var html = ("<div class='foo'><ul><li class='name'>Hello</li><li class='addr'>There</li></ul></div>");
+
+  var $src, $srcbody;
+
+  before(function() {
+    $src = $(html);
+  });
+
+  afterEach(function() {
+    $('.hello').remove();
+  });
+
+  bench("clone off-dom", function() {
+    var $el = $src.clone();
+    $el.attr('class', 'hello');
+    $el.find('.name').html('Michael Jackson');
+    $el.find('.addr').html('Moon');
+    $el.appendTo('body');
+  });
+});
+</script>
