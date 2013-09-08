@@ -1,8 +1,7 @@
-# Benchmark.js runner
+# Benchmark.js runner [(demo)](http://rstacruz.github.io/benchmarkjs-runner/example.html)
 
 Easy way to create performance tests for browser JS performance using 
 [Benchmark.js]. Think of it like an easy-to-use version of [jsperf.com].
-**[(Demo)](http://rstacruz.github.io/benchmarkjs-runner/example.html)**
 
 ![Screenshot](http://rstacruz.github.io/benchmarkjs-runner/support/screenshot.png)
 
@@ -36,6 +35,23 @@ examples.
 </script>
 ~~~
 
+## API
+
+* `suite(name, [options], function)` -- Defines a Benchmark suite. You may
+optionally pass *options* to be used by Benchmark.js.
+
+* `bench(name, function, [options])` -- Defines a Benchmark. You may optionally
+pass *options* to be used by Benchmark.js.
+
+* `afterEach(function)` -- Defines a function to be called after each benchmark
+cycle. These routines do not contribute to the elapsed time of the benchmarks.
+
+* `before(function)` -- Defines a function to be called *before* all benchmarks in
+the suite are to be invoked. These routines do not contribute to the elapsed
+time of the benchmarks.
+
+* `after(function)` -- Defines a function to be called *after* all benchmarks in
+the suite are invoked.
 
 ## Acknowledgements
 
