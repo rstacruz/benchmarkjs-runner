@@ -171,13 +171,12 @@
         var $bench = $suite.find('.b-bench').eq(i);
 
         bench
-          .on('start cycle complete', function() {
-            updateSuite(suite, $suite);
-          })
           .on('start', function() {
+            updateSuite(suite, $suite);
             $bench.find('.b-progress').addClass('b-running');
           })
           .on('error complete', function() {
+            updateSuite(suite, $suite);
             $bench.find('.b-progress').removeClass('b-running');
           });
       });
@@ -207,10 +206,7 @@
       str  = n(bench.hz) + " per sec";
       tip  = "Executed " + n(bench.count) + "x, took ";
       tip += n(bench.times.elapsed, 2) + "s";
-    }
 
-    // if (!suite.running) {
-    if (!bench.running && bench.count > 0) {
       var percent = bench.hz / fastest;
       $bench.find('.b-progress').attr('title', n(percent*100) + "%");
       $bench.find('.b-progress-bar').css({ width: percent*100 + "%" });

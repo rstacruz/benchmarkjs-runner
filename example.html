@@ -4,12 +4,12 @@
 <script src='runner.js'></script>
 <script>
 suite("String matching", function() {
-  bench("String#indexOf", function() {
-    "Hello world".indexOf('o') > -1;
-  });
-
   bench("String#match", function() {
     !! "Hello world".match(/o/);
+  });
+
+  bench("String#indexOf", function() {
+    "Hello world".indexOf('o') > -1;
   });
 
   bench("RegExp#test", function() {
