@@ -5,6 +5,8 @@ Easy way to create performance tests for browser JS performance using
 
 ![Screenshot](http://rstacruz.github.io/benchmarkjs-runner/support/screenshot.png)
 
+[See a demo](http://rstacruz.github.io/benchmarkjs-runner/example.html)
+
 ## Usage
 
 Simply create a plain HTML file that includes the `benchmark-runner` script,
