@@ -37,10 +37,10 @@ examples.
 </script>
 ~~~
 
-[benchmark.js](http://benchmarkjs.com/).
 
 ## Acknowledgements
 
 © 2013, Rico Sta. Cruz. Released under the [MIT License].
 
 [MIT License]: http://www.opensource.org/licenses/mit-license.php
+[benchmark.js]: http://benchmarkjs.com/
