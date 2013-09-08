@@ -12915,10 +12915,19 @@ if ( typeof window === "object" && typeof window.document === "object" ) {
           updateSuite(suite, $suite);
         });
 
-      each(suite, function(bench) {
-        bench.on('start cycle complete', function() {
-          updateSuite(suite, $suite);
-        });
+      each(suite, function(bench, i) {
+        var $bench = $suite.find('.b-bench').eq(i);
+
+        bench
+          .on('start cycle complete', function() {
+            updateSuite(suite, $suite);
+          })
+          .on('start', function() {
+            $bench.find('.b-progress').addClass('b-running');
+          })
+          .on('error complete', function() {
+            $bench.find('.b-progress').removeClass('b-running');
+          });
       });
     });
 
@@ -12943,20 +12952,20 @@ if ( typeof window === "object" && typeof window.document === "object" ) {
     }
 
     else if (!bench.running && bench.count > 0) {
-      str = n(bench.hz) + " per sec";
-      tip = "Executed " + n(bench.count) + "x";
-      console.log(bench);
+      str  = n(bench.hz) + " per sec";
+      tip  = "Executed " + n(bench.count) + "x, took ";
+      tip += n(bench.times.elapsed, 2) + "s";
     }
 
-    if (!suite.running) {
+    // if (!suite.running) {
+    if (!bench.running && bench.count > 0) {
       var percent = bench.hz / fastest;
       $bench.find('.b-progress').attr('title', n(percent*100) + "%");
       $bench.find('.b-progress-bar').css({ width: percent*100 + "%" });
     }
 
     $bench
-      .find('.b-bench-status').show().html(str).attr('title', tip).end()
-      .find('.b-progress').toggleClass('b-running', bench.running).end();
+      .find('.b-bench-status').show().html(str).attr('title', tip).end();
   }
 
   /**
@@ -12972,7 +12981,11 @@ if ( typeof window === "object" && typeof window.document === "object" ) {
    * Helper for comma-separating numbebrs
    */
 
-  function n(x) {
+  function n(x, round) {
+    if (round > 0) {
+      var exp = Math.pow(10, round);
+      return Math.round(x * exp)/exp;
+    }
     // http://stackoverflow.com/questions/2901102/how-to-print-a-number-with-commas-as-thousands-separators-in-javascript
     return parseInt(x, 10).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
