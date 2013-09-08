@@ -201,6 +201,7 @@
 
     if (!suite.running) {
       var percent = bench.hz / fastest;
+      $bench.find('.b-progress').attr('title', parseInt(percent*100, 10) + "%");
       $bench.find('.b-progress-bar').css({ width: percent*100 + "%" });
     }
 
