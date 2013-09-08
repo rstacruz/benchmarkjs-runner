@@ -104,7 +104,7 @@
         ".b-progress { display: inline-block; width: 50px; height: 4px; border: solid 1px #ddd; position: relative; border-radius: 2px; margin-right: 10px; padding: 1px; overflow: hidden; }" +
         ".b-progress { -webkit-transform: translate3d(0,0,0); }" +
         ".b-progress-bar { width: 0; background: #ccc; height: 100%; -webkit-transition: width 100ms ease; -moz-transition: width 100ms ease; transition: width 100ms ease; }" +
-        ".b-running .b-progress-bar { width: 5%; background: #eee; }" +
+        ".b-running .b-progress-bar { background: #eee; }" +
         "";
     },
 
@@ -170,6 +170,7 @@
           .on('start', function() {
             updateSuite(suite, $suite);
             $bench.find('.b-progress').addClass('b-running');
+            $bench.find('.b-progress-bar').css({ width: '5%' });
             $bench.find('.b-bench-status').html('running...');
           })
           .on('error complete', function() {
