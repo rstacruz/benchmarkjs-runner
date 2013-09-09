@@ -110,7 +110,7 @@
         ".b-progress { -webkit-transform: translate3d(0,0,0); }",
         ".b-progress-bar { width: 0; background: #ccc; height: 100%; -webkit-transition: width 100ms ease; -moz-transition: width 100ms ease; transition: width 100ms ease; }",
         ".b-running .b-progress-bar { background: #eee; }",
-        ".b-expand { background: #f4f4f4; padding: 0 5px; letter-spacing: 1px; line-height: 12px; border: solid 1px transparent; color: #999; border-radius: 2px; }",
+        ".b-expand { background: #fcfcfc; padding: 0 5px; letter-spacing: 1px; line-height: 12px; color: #999; border-radius: 2px; box-shadow: inset -1px -1px 0 rgba(0, 0, 0, 0.05); }",
         ".b-expand:hover { background: #eaeaea; }",
         ".b-expand:active { background: #1bd; color: white; } ",
         ".b-code { padding: 15px; background: #fcfcfc; box-shadow: inset 1px 1px 0 rgba(0, 0, 0, 0.05), inset 0 0 3px rgba(0, 0, 0, 0.05); margin: 10px 0; }",
