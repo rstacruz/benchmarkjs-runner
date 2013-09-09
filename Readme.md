@@ -16,6 +16,7 @@ examples.
 <meta charset='utf-8' />
 <title>Benchmarks</title>
 <script src='http://rstacruz.github.io/benchmarkjs-runner/runner.js'></script>
+<body>
 <script>
 
   suite("String matching", function() {
