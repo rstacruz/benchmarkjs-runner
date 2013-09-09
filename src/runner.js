@@ -251,6 +251,10 @@
       var exp = Math.pow(10, round);
       return Math.round(x * exp)/exp;
     }
+
+    // Instead of "2 per sec", show "2.04 per sec"
+    if (x < 10) return n(x, 2);
+
     // http://stackoverflow.com/questions/2901102/how-to-print-a-number-with-commas-as-thousands-separators-in-javascript
     return parseInt(x, 10).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
