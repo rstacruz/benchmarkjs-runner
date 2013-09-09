@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<meta charset='utf-8' />
+<title>Benchmarks</title>
+<script src='http://rstacruz.github.io/benchmarkjs-runner/runner.js'></script>
+<script src='http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js'></script>
+
+<div id="regulations" class="view">
+    <div class="content"></div>
+</div>
+<div id="rules" class="view">
+    <div role='box' class="content full-content"></div>
+</div>
+
+<script>
+  suite("querying", function() {
+    bench("#id", function() {
+      $('#rules')
+    });
+    bench(".class", function() {
+      $('.full-content')
+    });
+    bench("#id .class", function() {
+      $('#rules .full-content')
+    });
+    bench(".class .class", function() {
+      $('.view .full-content')
+    });
+    bench("[attr=val]", function() {
+      $('[role="box"]')
+    });
+    bench("[attr~=val]", function() {
+      $('[role~="box"]')
+    });
+  });
+</script>
