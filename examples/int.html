@@ -6,31 +6,32 @@
 <script>
   suite("integer", function() {
     bench("parseInt", function() {
-      for (var i=0; i < 1000000; i++) {
+      for (var i=0; i < 1000; i++) {
+        var i = Math.random() * 1000;
         parseInt(i / 4);
       }
     });
 
     bench("Math.floor", function() {
-      for (var i=0; i < 1000000; i++) {
+      for (var i=0; i < 1000; i++) {
         Math.floor(i / 4);
       }
     });
 
     bench("toString + split", function() {
-      for (var i=0; i < 1000000; i++) {
+      for (var i=0; i < 1000; i++) {
         (i / 4).toString().split('.')[0];
       }
     });
 
     bench("String concat + split", function() {
-      for (var i=0; i < 1000000; i++) {
+      for (var i=0; i < 1000; i++) {
         ("" + i / 4).split('.')[0];
       }
     });
 
     bench("RegExp", function() {
-      for (var i=0; i < 1000000; i++) {
+      for (var i=0; i < 1000; i++) {
         ("" + i / 4).match(/([0-9]*)(?:\.|$)/)[1];
       }
     });
