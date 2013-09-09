@@ -12861,7 +12861,7 @@ if ( typeof window === "object" && typeof window.document === "object" ) {
         ".b-expand { background: #f4f4f4; padding: 0 5px; letter-spacing: 1px; line-height: 12px; border: solid 1px transparent; color: #999; border-radius: 2px; }",
         ".b-expand:hover { background: #eaeaea; }",
         ".b-expand:active { background: #1bd; color: white; } ",
-        ".b-code { padding: 20px; background: #fcfcfc; box-shadow: inset 1px 1px 0 rgba(0, 0, 0, 0.05), inset 0 0 3px rgba(0, 0, 0, 0.05); margin: 10px 0; }",
+        ".b-code { padding: 15px; background: #fcfcfc; box-shadow: inset 1px 1px 0 rgba(0, 0, 0, 0.05), inset 0 0 3px rgba(0, 0, 0, 0.05); margin: 10px 0; }",
         ".b-code pre { margin: 0; padding: 0; font-family: menlo, ubuntu mono, monospace; font-size: 0.7em; }",
         "pre .string, pre .number { color: #1bd; }",
         "pre .comment { color: #80808a; }",
@@ -12910,13 +12910,23 @@ if ( typeof window === "object" && typeof window.document === "object" ) {
       });
 
       // Bind DOM -> model events
-      $suite.find('.b-run').on('click', function() {
+      $('.b-run', $suite).on('click', function() {
         suite.reset();
         suite.run({ async: true });
       });
 
-      $suite.find('.b-expand').on('click', function() {
+      $('.b-expand', $suite).on('click', function() {
         $(this).closest('.b-bench').find('.b-code').toggle();
+      });
+
+      $('.b-header', $suite).on('dblclick', function() {
+        var $boxes = $(this).closest('.b-suite').find('.b-code');
+
+        if ($boxes.filter(':hidden').length > 0) {
+          $boxes.show();
+        } else {
+          $boxes.hide();
+        }
       });
 
       // Bind model -> DOM events
