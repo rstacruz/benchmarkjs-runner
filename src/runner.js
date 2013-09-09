@@ -103,17 +103,17 @@
         ".b-header button:hover { background: #f2f2f2; border-color: #ddd; }",
         ".b-header button:active { background: #1bd; border-color: #1bd; color: white; }",
         ".b-header button.disabled { background: white; border-color: #e0e0e0; color: #bbb; cursor: not-allowed; pointer-events: none; -webkit-pointer-events: none; opacity: 0.2; }",
-        ".b-bench-status { margin-right: 15px; color: #1bd; font-size: 0.7em; }",
+        ".b-bench-status { margin-right: 15px; color: #1bd; font-size: 0.7em; display: none; }",
         ".b-bench { padding: 3px 0; }",
         ".b-bench h3 { display: inline-block; margin-right: 15px; font-size: 0.9em; }",
-        ".b-progress { display: inline-block; width: 50px; height: 4px; border: solid 1px #ddd; position: relative; border-radius: 2px; margin-right: 10px; padding: 1px; overflow: hidden; }",
+        ".b-progress { display: inline-block; width: 50px; height: 4px; border: solid 1px #ddd; position: relative; border-radius: 2px; margin-right: 15px; padding: 1px; overflow: hidden; }",
         ".b-progress { -webkit-transform: translate3d(0,0,0); }",
         ".b-progress-bar { width: 0; background: #ccc; height: 100%; -webkit-transition: width 100ms ease; -moz-transition: width 100ms ease; transition: width 100ms ease; }",
         ".b-running .b-progress-bar { background: #eee; }",
         ".b-expand { background: #fcfcfc; padding: 0 5px; letter-spacing: 1px; line-height: 12px; color: #999; border-radius: 2px; box-shadow: inset -1px -1px 0 rgba(0, 0, 0, 0.05); }",
         ".b-expand:hover { background: #eaeaea; }",
         ".b-expand:active { background: #1bd; color: white; } ",
-        ".b-code { padding: 15px; background: #fcfcfc; box-shadow: inset 1px 1px 0 rgba(0, 0, 0, 0.05), inset 0 0 3px rgba(0, 0, 0, 0.05); margin: 10px 0; }",
+        ".b-code { padding: 15px; background: #fcfcfc; box-shadow: inset 1px 1px 0 rgba(0, 0, 0, 0.05), inset 0 0 3px rgba(0, 0, 0, 0.05); margin: 10px 0 10px 69px; }",
         ".b-code pre { margin: 0; padding: 0; font-family: menlo, ubuntu mono, monospace; font-size: 0.7em; }",
         "pre .string, pre .number { color: #1bd; }",
         "pre .comment { color: #80808a; }",
@@ -200,7 +200,7 @@
             updateSuite(suite, $suite);
             $bench.find('.b-progress').addClass('b-running');
             $bench.find('.b-progress-bar').css({ width: '5%' });
-            $bench.find('.b-bench-status').html('running...');
+            $bench.find('.b-bench-status').show().html('running...');
           })
           .on('error complete', function() {
             updateSuite(suite, $suite);
@@ -239,8 +239,11 @@
       $bench.find('.b-progress-bar').css({ width: percent*100 + "%" });
     }
 
-    $bench
-      .find('.b-bench-status').show().html(str).attr('title', tip).end();
+    if (str === '') {
+      $bench.find('.b-bench-status').hide();
+    } else {
+      $bench.find('.b-bench-status').show().html(str).attr('title', tip);
+    }
   }
 
   /**
